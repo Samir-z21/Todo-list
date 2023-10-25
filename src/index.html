@@ -10,8 +10,8 @@
     <div id="header">
         <h1>Todo-List</h1>
         <div id="buttons">
-            <button>+Project</button>
-            <button>+ task</button>
+            <button id="projectBtn">+ Project</button>
+            <button id="taskBtn">+ Task</button>
         </div>
     </div>
 
@@ -19,13 +19,48 @@
         <h5>Your Projects</h5>
     </div>
 
-    <div id="todo-list">
+    <div id="tasks-container">
         <h2>Upcomming tasks</h1>
     </div>
     
     <div id="footer">
         <p>Copyright</p>
     </div>
+
+
+    <dialog id="taskDialog">
+        <form id="taskForm" action="push">
+            <button class="close-btn">x</button>
+
+            <input type="text" id="taskTitle" placeholder="Title" pattern=".*[a-zA-Z].*" maxlength="20"  required>
+
+            <input type="text" id="taskDescription" placeholder="Description" pattern=".*[a-zA-Z].*" maxlength="20"  required>
+
+            <input type="date" id="taskDueDate" placeholder="Due Date"  required>
+
+            <!-- <input type="number" id="taskPriority" placeholder="Priority" min="1" max="9999" required> -->
+
+            <input type="checkbox" id="taskCheckList">
+        </form>
+    </dialog>
+
+    <dialog id="projectDialog">
+        <form id="projectForm" action="push">
+            <button class="close-btn">x</button>
+
+            <input type="text" id="projectTitle" placeholder="Title" pattern=".*[a-zA-Z].*" maxlength="20"  required>
+
+            <input type="text" id="projectDescription" placeholder="Description" pattern=".*[a-zA-Z].*" maxlength="20"  required>
+
+            <input type="date" id="projectDueDate" placeholder="Due Date"  required>
+
+            <!-- <input type="number" id="projectPriority" placeholder="Priority" min="1" max="9999" required> -->
+
+            <input type="checkbox" id="projectCheckList">
+
+            <input type="color" id="projectColor">
+        </form>
+    </dialog>
 
 </body>
 </html>
