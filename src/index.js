@@ -1,6 +1,6 @@
 import '../dist/style.css'
 import storeTask from './storeModals'
-import addTask from './objectContructor'
+//import addTask from './objectContructor'
 
 
 //index.js functions
@@ -25,12 +25,19 @@ projectBtn.addEventListener('click', () => {
 const taskConfirm = document.getElementById('taskConfirm');
 const projectConfirm = document.getElementById('projectConfrim');
 
-taskConfirm.addEventListener('click', (event) => {
+taskConfirm.addEventListener('click', event => {
     
     event.preventDefault();
-    taskDialog.close();
     storeTask();
-})
+    
+});
+
+// closeBtn
+const closeBtn = document.querySelector('.close-btn');
+closeBtn.addEventListener('click', event => {
+    event.preventDefault();
+    taskDialog.close();
+}  )
 //projectConfirm.addEventListener('click',projectStoreObject())
 
 

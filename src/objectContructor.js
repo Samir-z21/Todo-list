@@ -1,3 +1,6 @@
+//import loadTask from "./loadConent";
+
+
 class Task {
     constructor (title, description, dueDate, checklist) {
         this.title = title,
@@ -7,9 +10,11 @@ class Task {
     }
 }
 
-function addTask (title, description, dueDate, checklist) {
-    let newTaskObj = new Task (title, description, dueDate, checklist);
-    console.log(newTaskObj)
+ function addTask (title, description, dueDate, checklist) {
+    const newTaskObj = new Task (title, description, dueDate, checklist);
+    console.log(newTaskObj.title)
+
+    return {newTaskObj}
 }
 
 
@@ -22,6 +27,6 @@ class Project extends Task {
 
 
 
-const example = new Task ("read book", "Quran pages 10-23", "12 jan 2023", "3", false)
+
 
 export default addTask

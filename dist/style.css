@@ -46,9 +46,37 @@ button {
 /*Tasks container */
 #tasks-container {
     border: 1px solid green;
-    grid-area: 2 / 2 / 3 / 3 ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px;
 }
 
+/*task card*/
+.taskCard {
+    display: flex;
+    flex-direction: column;
+    background-color: blue;
+    padding: 20px;
+}
+
+.bottomCard {
+    display: flex;
+}
+
+.centerInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.taskCheckMark {
+    width: 20px;
+    height: 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
 /*Footer*/
 #footer {
     grid-column: 1/3;
