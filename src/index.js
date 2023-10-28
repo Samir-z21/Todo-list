@@ -3,41 +3,43 @@ import storeTask from './storeModals'
 //import addTask from './objectContructor'
 
 
-//index.js functions
+// taskbtn
 const taskBtn = document.getElementById('taskBtn');
-const projectBtn = document.getElementById('projectBtn');
-
 const taskDialog = document.getElementById('taskDialog');
-const projectDialog = document.getElementById('projectDialog');
-
 taskBtn.addEventListener('click', () => {
     taskDialog.showModal();
     
 });
 
+
+// projectBtn
+const projectBtn = document.getElementById('projectBtn');
+const projectDialog = document.getElementById('projectDialog');
 projectBtn.addEventListener('click', () => {
     projectDialog.showModal();
 });
 
 
 
-// storeModals functions
+// confirm functions
 const taskConfirm = document.getElementById('taskConfirm');
 const projectConfirm = document.getElementById('projectConfrim');
 
 taskConfirm.addEventListener('click', event => {
-    
     event.preventDefault();
     storeTask();
-    
 });
 
 // closeBtn
-const closeBtn = document.querySelector('.close-btn');
-closeBtn.addEventListener('click', event => {
+const closeBtn = document.querySelectorAll('.close-btn');
+closeBtn.forEach((btn) => {
+    btn.addEventListener('click', event => {
     event.preventDefault();
     taskDialog.close();
-}  )
+    projectDialog.close();
+    });
+});
+
 //projectConfirm.addEventListener('click',projectStoreObject())
 
 
