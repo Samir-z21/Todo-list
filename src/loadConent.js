@@ -1,18 +1,21 @@
 import {addTask, addProject} from './objectContructor';
+import {linkProjectName, colorTask} from "./link-ProjectTask";
 
 // adding Task content
 const tasksContainer = document.getElementById('tasks-container');
 
-function loadTask(title, description, dueDate) {
-    let accessTask = addTask(title, description, dueDate);
-
-    
+function loadTask(title, description, dueDate, projectTitle) {
+    let accessTask = addTask(title, description, dueDate, projectTitle);
 
     const taskCard = createNamedDiv("taskCard");
-    
 
-    //const topDetailsCard = document.createElement('div');
-    //const projectTitle = document.createElement('div');
+    taskCard.style.backgroundColor = colorTask(projectTitle);
+
+    const topDetailsCard = createNamedDiv('topDetailsCard');
+        topDetailsCard.appendChild(createInfoDiv('projectName', accessTask.newTaskObj.projectTitle));
+
+    taskCard.appendChild(topDetailsCard);
+
     //const dayCount = document.createElement('div');
     //topDetailsCard.appenndChild(projecTitle, dayCount)
 
@@ -21,7 +24,7 @@ function loadTask(title, description, dueDate) {
         const centerInfo = createNamedDiv("centerInfo");
 
             centerInfo.appendChild(createInfoDiv("taskTitle", accessTask.newTaskObj.title));
-            centerInfo.appendChild(createInfoDiv("taskDescription", accessTask.newTaskObj.description));
+            //centerInfo.appendChild(createInfoDiv("taskDescription", accessTask.newTaskObj.description));
 
             centerInfo.appendChild(createInfoDiv("taskDueDate", accessTask.newTaskObj.dueDate));
 
@@ -57,9 +60,10 @@ function loadProject (title, description, dueDate, color) {
 
         projectItem.appendChild(createInfoDiv('projectDueDate', accessProject.newProjectObj.dueDate));
 
-    projectsContainer.appendChild(projectItem);
+        linkProjectName(title);
+        console.log(title)
 
-    
+    projectsContainer.appendChild(projectItem);
 }
 
 

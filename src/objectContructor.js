@@ -1,33 +1,37 @@
 //import loadTask from "./loadConent";
-
+const projectArray = [];
+const taskArray = []
 
 class Task {
-    constructor (title, description, dueDate) {
+    constructor (title, description, dueDate, projectTitle) {
         this.title = title,
         this.description = description;
         this.dueDate = dueDate;
-    }
+        this.projectTitle = projectTitle;
+    }  
 }
-
-function addTask (title, description, dueDate) {
-    const newTaskObj = new Task (title, description, dueDate);
-    return {newTaskObj}
-}
-
 
 class Project extends Task {
     constructor (title, description, dueDate, color) {
-     super (title, description, dueDate);
-     this.color = color;
+        super (title, description, dueDate);
+        this.color = color;
     }
 }
 
+function addTask (title, description, dueDate, projectName) {
+    const newTaskObj = new Task (title, description, dueDate, projectName);
+    taskArray.push(newTaskObj);
+    console.log(taskArray);
+    return {newTaskObj, taskArray}
+}
 function addProject (title, description, dueDate, color) {
-    const newProjectObj = new Project (title, description, dueDate, color)
-    return {newProjectObj}
+    const newProjectObj = new Project (title, description, dueDate, color);
+    projectArray.push(newProjectObj);
+    console.log(projectArray)
+    return {newProjectObj, projectArray}
 }
 
 
 
 
-export {addTask, addProject}
+export {addTask, addProject , taskArray, projectArray}
