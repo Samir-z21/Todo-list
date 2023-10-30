@@ -1,50 +1,68 @@
-import addTask from './objectContructor'
+import {addTask, addProject} from './objectContructor';
 
+// adding Task content
 const tasksContainer = document.getElementById('tasks-container');
-const projectsContainer = document.getElementById('sidebar');
 
-function loadTask(title, description, dueDate, checklist) {
-    let accessTask = addTask(title, description, dueDate, checklist);
+function loadTask(title, description, dueDate) {
+    let accessTask = addTask(title, description, dueDate);
 
-    const taskCard = document.createElement('div');
-    taskCard.classList.add('taskCard');
+    
+
+    const taskCard = createNamedDiv("taskCard");
+    
 
     //const topDetailsCard = document.createElement('div');
     //const projectTitle = document.createElement('div');
     //const dayCount = document.createElement('div');
     //topDetailsCard.appenndChild(projecTitle, dayCount)
 
-    const bottomCard = document.createElement('div');
-    bottomCard.classList.add('bottomCard');
+    const bottomCard = createNamedDiv("bottomCard");
     
-        const centerInfo = document.createElement('div');
-        centerInfo.classList.add('centerInfo')
+        const centerInfo = createNamedDiv("centerInfo");
 
             centerInfo.appendChild(createInfoDiv("taskTitle", accessTask.newTaskObj.title));
             centerInfo.appendChild(createInfoDiv("taskDescription", accessTask.newTaskObj.description));
 
             centerInfo.appendChild(createInfoDiv("taskDueDate", accessTask.newTaskObj.dueDate));
 
-        const rightSide = document.createElement('div');
+        const rightSide = createNamedDiv("rightSide");
 
             rightSide.appendChild(createInfoDiv("taskCheckMark"));
             rightSide.appendChild(createInfoDiv("taskRemoveBtn", "🗑️" ));
 
     
-
+    //appending all the divs created
     bottomCard.append(centerInfo);
     bottomCard.append(rightSide);
     
-
-    //append details to card
     taskCard.appendChild(bottomCard);
 
-
-
-    //apend to container
     tasksContainer.appendChild(taskCard);
-    return taskCard
+
 }
+
+// adding project content 
+const projectsContainer = document.getElementById('sidebar');
+
+function loadProject (title, description, dueDate, color) {
+    let accessProject = addProject(title, description, dueDate, color);
+
+    const projectItem = createNamedDiv("projectItem");
+
+        projectItem.style.backgroundColor = color;
+
+        //change color to white if black is backgroundColor
+
+        projectItem.appendChild(createInfoDiv("projectTitle", accessProject.newProjectObj.title));
+
+        projectItem.appendChild(createInfoDiv('projectDueDate', accessProject.newProjectObj.dueDate));
+
+    projectsContainer.appendChild(projectItem);
+
+    
+}
+
+
 
 // quick createInfoDiv 
 function createInfoDiv (cssClass, text) {
@@ -54,7 +72,15 @@ function createInfoDiv (cssClass, text) {
     return div
 }
 
+// quick createNamedDiv
+function createNamedDiv (name) {
+    const divsObjects = {};
+    divsObjects[name] = document.createElement('div');
+    divsObjects[name].classList.add(name);
+    return divsObjects[name]
+}
 
 
-export default loadTask
+
+export {loadTask, loadProject}
 //
