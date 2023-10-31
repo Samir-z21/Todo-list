@@ -6,6 +6,7 @@ import { removeColorOpt } from "./link-ProjectTask";
 const taskDialog = document.getElementById('taskDialog');
 const projectDialog = document.getElementById('projectDialog');
 
+
 // storing Task function
 function storeTask () {
     const taskTitle = document.getElementById('taskTitle');
@@ -15,14 +16,13 @@ function storeTask () {
     const projectList = document.getElementById("projectList");
     const selectedProject = projectList.options[projectList.selectedIndex];
 
-    if (!taskTitle.checkValidity() || !taskDescription.checkValidity() || !taskDueDate.checkValidity() || taskTitle.value === "" || taskDescription.value === "") {
+    taskTitle.focus();
+
+    if (!taskTitle.checkValidity() || !taskDescription.checkValidity() || !taskDueDate.checkValidity() || /^\s*$/.test(taskTitle.value) || /^\s*$/.test(taskDescription.value)) {
         alert("Please fill the inputs. The title can't exceed 10 charachters. The description can't exceed 30 charachters");
         return
     }
 
-
-    
-    
     let title = taskTitle.value;
     let description = taskDescription.value;
     let dueDate = taskDueDate.value;
@@ -33,6 +33,9 @@ function storeTask () {
     taskDialog.close();
     loadTask(title, description, dueDate, projectTitle);
 
+    taskTitle.value = '';
+    taskDescription.value = '';
+    taskDueDate.value = '';
 }
 
 // storing project function
@@ -42,10 +45,11 @@ function storeProject () {
     const projectDueDate = document.getElementById('projectDueDate');
     const projectColor = document.getElementById('projectColor');
 
-    if (!projectTitle.checkValidity() || !projectDescription.checkValidity() || !projectDueDate.checkValidity() || projectTitle.value === '' || projectDescription.value === "") {
+    if (!projectTitle.checkValidity() || !projectDescription.checkValidity() || !projectDueDate.checkValidity() || /^\s*$/.test(projectTitle.value) || /^\s*$/.test(projectDescription.value)) {
         alert("Please fill the inputs. The title can't exceed 10 charachters. The description can't exceed 30 charachters");
         return
     }
+
 
     let title = projectTitle.value;
     let description = projectDescription.value;
@@ -56,8 +60,7 @@ function storeProject () {
         alert("Max amount of projects reached")
         return
     };
-
-
+    
     const doubleNameCheck = projectArray.find(obj => obj.title === title);
 
     if (doubleNameCheck) {
@@ -67,7 +70,11 @@ function storeProject () {
 
     projectDialog.close();
 
-    loadProject(title, description, dueDate, color) 
+    loadProject(title, description, dueDate, color);
+
+    projectTitle.value = '';
+    projectDescription.value = '';
+    projectDueDate.value = '';
 }
 
 export {storeTask, storeProject}

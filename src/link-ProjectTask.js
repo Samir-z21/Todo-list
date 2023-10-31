@@ -31,7 +31,6 @@ function removeColorOpt (color) {
     }
 
     projectColor.removeChild(chosenOption);
-    
 
 }
 export {linkProjectName, colorTask, removeColorOpt}

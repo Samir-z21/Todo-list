@@ -1,6 +1,6 @@
 import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
-
+const taskCardArrays = [];
 // adding Task content
 const tasksContainer = document.getElementById('tasks-container');
 
@@ -39,9 +39,10 @@ function loadTask(title, description, dueDate, projectTitle) {
     bottomCard.append(rightSide);
     
     taskCard.appendChild(bottomCard);
-
     tasksContainer.appendChild(taskCard);
-
+    
+    taskCardArrays.push(taskCard);
+    
 }
 
 // adding project content 
@@ -86,5 +87,5 @@ function createNamedDiv (name) {
 
 
 
-export {loadTask, loadProject}
+export {loadTask, loadProject, taskCardArrays}
 //

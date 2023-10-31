@@ -1,6 +1,10 @@
 import '../dist/style.css'
 import  {storeTask, storeProject } from './storeModals'
-//import addTask from './objectContructor'
+import filterTasks from './filter'
+
+//focus divs
+const taskTitle = document.getElementById('taskTitle');
+const projectTitle = document.getElementById('projectTitle');
 
 
 // taskbtn
@@ -8,7 +12,7 @@ const taskBtn = document.getElementById('taskBtn');
 const taskDialog = document.getElementById('taskDialog');
 taskBtn.addEventListener('click', () => {
     taskDialog.showModal();
-    
+    taskTitle.focus()
 });
 
 
@@ -17,19 +21,19 @@ const projectBtn = document.getElementById('projectBtn');
 const projectDialog = document.getElementById('projectDialog');
 projectBtn.addEventListener('click', () => {
     projectDialog.showModal();
+    projectTitle.focus();
 });
 
 
 
 // confirm functions
 const taskConfirm = document.getElementById('taskConfirm');
-const projectConfirm = document.getElementById('projectConfirm');
-
 taskConfirm.addEventListener('click', event => {
     event.preventDefault();
     storeTask();
 });
 
+const projectConfirm = document.getElementById('projectConfirm');
 projectConfirm.addEventListener('click', event => {
     event.preventDefault();
     storeProject();
@@ -46,6 +50,13 @@ closeBtn.forEach((btn) => {
     });
 });
 
+
+// filter listener 
+const filter = document.getElementById("filter");
+
+filter.addEventListener('change', () => {
+    filterTasks()
+})
 //projectConfirm.addEventListener('click',projectStoreObject())
 
 
