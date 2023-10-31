@@ -56,10 +56,7 @@ function storeProject () {
     let dueDate = projectDueDate.value;
     let color = projectColor.value;
     
-    if (removeColorOpt(color)) {
-        alert("Max amount of projects reached")
-        return
-    };
+    
     
     const doubleNameCheck = projectArray.find(obj => obj.title === title);
 
@@ -67,6 +64,11 @@ function storeProject () {
         alert("can't use same project name");
         return
     }
+    
+    if (removeColorOpt(color)) {
+        alert("Max amount of projects reached")
+        return
+    };
 
     projectDialog.close();
 

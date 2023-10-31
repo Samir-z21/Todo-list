@@ -1,6 +1,7 @@
 import { projectArray } from "./objectContructor";
 const projectList = document.getElementById("projectList");
 const projectColor = document.getElementById('projectColor');
+let elementCount = 1;
 
 function linkProjectName (title){
     const projectOption = document.createElement('option');
@@ -30,7 +31,10 @@ function removeColorOpt (color) {
         return true
     }
 
-    projectColor.removeChild(chosenOption);
+    if (projectList.childElementCount === elementCount) {
+        elementCount++;
+        projectColor.removeChild(chosenOption);
+    } else return
 
 }
 export {linkProjectName, colorTask, removeColorOpt}

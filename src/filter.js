@@ -1,27 +1,63 @@
-import { projectArray, taskArray } from "./objectContructor";
+import { taskArray } from "./objectContructor";
 import { taskCardArrays } from "./loadConent";
+
 const tasksContainer = document.getElementById('tasks-container');
-
 const filter = document.getElementById("filter");
-function filterTasks () {
-    
-    const currentTaskCards = Array.from(tasksContainer.getElementsByClassName('taskCard'));
 
+function filterTasks () {
+
+    // Clear current cards
+    const currentTaskCards = Array.from(tasksContainer.getElementsByClassName('taskCard'));
     currentTaskCards.forEach(div => {
         tasksContainer.removeChild(div)
     })
 
-    if (filter.value === "oldest") {
-        taskCardArrays.forEach(div => {
-            tasksContainer.appendChild(div);
-        });
+    //sort by filter
+    switch (filter.value) {
+        case "oldest":
+            appendChilds(taskCardArrays);
+        break;
+        
+        case "newest":
+            const newestArray = taskCardArrays.slice().reverse();
+            appendChilds(newestArray);
+        break;
+
+        case "dueDate":
+            function compareByDate(a, b) {
+                const dateA = new Date(a.querySelector('.taskDueDate').textContent);
+                const dateB = new Date(b.querySelector('.taskDueDate').textContent);
+              
+                return dateA - dateB;
+            }
+            
+            const dateSortedArray = taskCardArrays.slice().sort(compareByDate);
+            appendChilds(dateSortedArray);
+        break;
+            
+        case "project":
+            function compareByProject (a,b) {
+                const stringA = a.querySelector('.projectName').textContent;
+                const stringB = b.querySelector('.projectName').textContent;
+
+                return stringA.localeCompare(stringB);
+            }
+
+            const projectSortedArray = taskCardArrays.slice().sort(compareByProject);
+            appendChilds(projectSortedArray);
+        break;
     };
 
+    //console.log(currentTaskCards)
+    //console.log(taskCardArrays);
+    //console.log(taskArray);
+    //console.log(projectArray);
+}
 
-    console.log(currentTaskCards)
-    console.log(taskCardArrays);
-    console.log(taskArray);
-    console.log(projectArray);
+function appendChilds (namedArray) {
+    namedArray.forEach(div => {
+        tasksContainer.appendChild(div)
+    })
 }
 
 export default filterTasks

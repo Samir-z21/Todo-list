@@ -1,5 +1,7 @@
 import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
+import filterTasks from './filter';
+
 const taskCardArrays = [];
 // adding Task content
 const tasksContainer = document.getElementById('tasks-container');
@@ -39,9 +41,9 @@ function loadTask(title, description, dueDate, projectTitle) {
     bottomCard.append(rightSide);
     
     taskCard.appendChild(bottomCard);
-    tasksContainer.appendChild(taskCard);
-    
+
     taskCardArrays.push(taskCard);
+    filterTasks();
     
 }
 
@@ -62,7 +64,7 @@ function loadProject (title, description, dueDate, color) {
         projectItem.appendChild(createInfoDiv('projectDueDate', accessProject.newProjectObj.dueDate));
 
         linkProjectName(title);
-        console.log(title)
+        
 
     projectsContainer.appendChild(projectItem);
 }
