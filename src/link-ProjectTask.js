@@ -1,5 +1,6 @@
 import { projectArray } from "./objectContructor";
 const projectList = document.getElementById("projectList");
+const projectColor = document.getElementById('projectColor');
 
 function linkProjectName (title){
     const projectOption = document.createElement('option');
@@ -8,15 +9,29 @@ function linkProjectName (title){
     projectOption.text = title;
     projectList.appendChild(projectOption);
 
-    console.log(title)
 }
 
 function colorTask (projectTitle) {
     const matchingObj = projectArray.find(obj => obj.title === projectTitle);
-    console.log(matchingObj)
+    
     
     if (matchingObj) {
     return matchingObj.color
     } else return
 }
-export {linkProjectName, colorTask}
+
+function removeColorOpt (color) {
+    const options = Array.from(projectColor.getElementsByTagName('option'));
+
+    const chosenOption = options.find(option => option.value === color)
+
+    if (!(projectColor.contains(chosenOption))) {
+        console.log("hey")
+        return true
+    }
+
+    projectColor.removeChild(chosenOption);
+    
+
+}
+export {linkProjectName, colorTask, removeColorOpt}

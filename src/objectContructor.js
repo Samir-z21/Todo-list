@@ -21,13 +21,13 @@ class Project extends Task {
 function addTask (title, description, dueDate, projectName) {
     const newTaskObj = new Task (title, description, dueDate, projectName);
     taskArray.push(newTaskObj);
-    console.log(taskArray);
+
     return {newTaskObj, taskArray}
 }
 function addProject (title, description, dueDate, color) {
     const newProjectObj = new Project (title, description, dueDate, color);
     projectArray.push(newProjectObj);
-    console.log(projectArray)
+    
     return {newProjectObj, projectArray}
 }
 
