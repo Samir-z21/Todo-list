@@ -1,6 +1,7 @@
 import '../dist/style.css'
 import  {storeTask, storeProject } from './storeModals'
 import filterTasks from './filter'
+import {archive} from './dlt-archv'
 
 //focus divs
 const taskTitle = document.getElementById('taskTitle');
@@ -53,10 +54,16 @@ closeBtn.forEach((btn) => {
 
 // filter listener 
 const filter = document.getElementById("filter");
-
 filter.addEventListener('change', () => {
     filterTasks()
-})
+});
+
+const checkboxArchive = document.getElementById("checkboxArchive");
+checkboxArchive.addEventListener('click', () => {
+    archive();
+});
+
+
 //projectConfirm.addEventListener('click',projectStoreObject())
 
 

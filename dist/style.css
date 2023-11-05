@@ -53,12 +53,13 @@ button {
 }
 
 /*task card*/
-.taskCard {
+.taskCard{
     display: flex;
     flex-direction: column;
     background-color: blue;
     padding: 20px;
 }
+
 
 .bottomCard {
     display: flex;
@@ -70,13 +71,19 @@ button {
     align-items: center;
 }
 
-.taskCheckMark {
+.taskCheckbox {
     width: 20px;
     height: 20px;
     background-color: #eee;
     border: 1px solid #ccc;
     cursor: pointer;
 }
+
+.taskRemoveBtn {
+    cursor: pointer;
+    border: 1px solid darkred;
+}
+
 /*Footer*/
 #footer {
     grid-column: 1/3;

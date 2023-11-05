@@ -1,5 +1,5 @@
-import { taskArray } from "./objectContructor";
 import { taskCardArrays } from "./loadConent";
+import { archive } from "./dlt-archv";
 
 const tasksContainer = document.getElementById('tasks-container');
 const filter = document.getElementById("filter");
@@ -7,11 +7,13 @@ const filter = document.getElementById("filter");
 function filterTasks () {
 
     // Clear current cards
-    const currentTaskCards = Array.from(tasksContainer.getElementsByClassName('taskCard'));
+    const currentTaskCards = tasksContainer.querySelectorAll('.taskCard');
     currentTaskCards.forEach(div => {
         tasksContainer.removeChild(div)
     })
-
+    
+    
+    
     //sort by filter
     switch (filter.value) {
         case "oldest":
@@ -47,11 +49,8 @@ function filterTasks () {
             appendChilds(projectSortedArray);
         break;
     };
+    archive();
 
-    //console.log(currentTaskCards)
-    //console.log(taskCardArrays);
-    //console.log(taskArray);
-    //console.log(projectArray);
 }
 
 function appendChilds (namedArray) {
