@@ -2,6 +2,7 @@ import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
 import { taskDone } from './dlt-archv';
 import filterTasks from './filter';
+import { deleteTask } from './dlt-archv';
 
 const taskCardArrays = [];
 // adding Task content
@@ -48,7 +49,7 @@ function loadTask(title, description, dueDate, projectTitle) {
 
     taskCardArrays.push(taskCard);
 
-    console.log(taskCardArrays)
+    
 
     taskCheckbox.addEventListener('click', (event) => {
         taskDone(event)
@@ -87,6 +88,11 @@ function createInfoDiv (cssClass, text) {
     const div = document.createElement('div');
     div.classList.add(cssClass);
     div.textContent = text;
+        if (cssClass === "taskRemoveBtn"){
+            div.addEventListener("click",event => {
+                deleteTask(event);
+            })
+        };
     return div
 }
 

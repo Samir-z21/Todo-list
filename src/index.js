@@ -1,7 +1,8 @@
 import '../dist/style.css'
 import  {storeTask, storeProject } from './storeModals'
-import filterTasks from './filter'
-import {archive} from './dlt-archv'
+import filterTasks from './filter';
+import {archive} from './dlt-archv';
+
 
 //focus divs
 const taskTitle = document.getElementById('taskTitle');
@@ -62,6 +63,10 @@ const checkboxArchive = document.getElementById("checkboxArchive");
 checkboxArchive.addEventListener('click', () => {
     archive();
 });
+
+//delete listener 
+
+
 
 
 //projectConfirm.addEventListener('click',projectStoreObject())

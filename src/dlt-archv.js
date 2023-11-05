@@ -19,23 +19,20 @@ function taskDone(event) {
     const archivedIndex = archivedTasks.indexOf(clickedCard);
     const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
 
+    console.log(clickedCard)
     const clickedCardProjectTitleDiv = clickedCard.getElementsByClassName("projectName");
     const clickedCardProjectTitle = clickedCardProjectTitleDiv[0].textContent;
 
-    console.log(clickedCardProjectTitleDiv);
-    console.log(clickedCardProjectTitle)
-
-    console.log(clickedCard)
-
-
     if (event.target.checked) {
-      if (!archivedTasks.includes(clickedCard)) {
-        archivedTasks.push(clickedCard);
-      }
-      
-      taskCardArrays.splice(clickedCardIndex, 1);
+        if (!archivedTasks.includes(clickedCard)) {
+          archivedTasks.push(clickedCard);
+        }
 
-      clickedCard.style.backgroundColor =  "rgb(153, 105, 105)";
+        if (clickedCardIndex !== -1) {
+          taskCardArrays.splice(clickedCardIndex, 1);
+        }
+
+        clickedCard.style.backgroundColor =  "rgb(153, 105, 105)";
     } else {
         
         if (!taskCardArrays.includes(clickedCard)) {
@@ -47,8 +44,6 @@ function taskDone(event) {
         }
 
         clickedCard.style.backgroundColor = colorTask(clickedCardProjectTitle);
-        
-
         if (!colorTask(clickedCardProjectTitle)) {
             clickedCard.style.backgroundColor = "blue"
         } 
@@ -57,27 +52,45 @@ function taskDone(event) {
     
     filterTasks();
     archive();
-
-
 }
   
-  
-
-
 function archive (){
     if (checkboxArchive.checked) {
         archivedTasks.forEach(div => {
             tasksContainer.appendChild(div)
-        });
-        console.log('archiveChecked')
-    } else {
-        console.log(archivedTasks)
+        }); 
+    } else { 
         archivedTasks.forEach(div => {
             tasksContainer.appendChild(div);
             tasksContainer.removeChild(div);
         })
-        console.log('archivedNotChecked')
     };
+};
+
+
+function deleteTask (event) {
+    
+    const clickedCard = findCardInArray(taskCardArrays) || findCardInArray(archivedTasks);
+
+    function findCardInArray(array) {
+      return array.find(card => card.querySelector('.taskRemoveBtn') === event.target);
+    }
+    
+    const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
+    const archivedIndex = archivedTasks.indexOf(clickedCard);
+
+
+    console.log(clickedCard,clickedCardIndex, archivedIndex)
+
+    if (clickedCardIndex !== -1) {
+        taskCardArrays.splice(clickedCardIndex, 1);
+    };
+
+    if (archivedIndex !== -1) {
+        archivedTasks.splice(archivedIndex, 1);
+    };
+
+    filterTasks();
 }
 
-export {taskDone, archive}
+export {taskDone, archive, deleteTask}
