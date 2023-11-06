@@ -59,7 +59,10 @@ button {
     background-color: blue;
     padding: 20px;
 }
-
+.topDetailsCard {
+    display: flex;
+    gap: 10px;
+}
 
 .bottomCard {
     display: flex;
@@ -82,6 +85,11 @@ button {
 .taskRemoveBtn {
     cursor: pointer;
     border: 1px solid darkred;
+}
+
+.openTask {
+    cursor: pointer;
+
 }
 
 /*Footer*/

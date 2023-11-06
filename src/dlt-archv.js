@@ -19,7 +19,7 @@ function taskDone(event) {
     const archivedIndex = archivedTasks.indexOf(clickedCard);
     const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
 
-    console.log(clickedCard)
+   
     const clickedCardProjectTitleDiv = clickedCard.getElementsByClassName("projectName");
     const clickedCardProjectTitle = clickedCardProjectTitleDiv[0].textContent;
 
@@ -80,7 +80,6 @@ function deleteTask (event) {
     const archivedIndex = archivedTasks.indexOf(clickedCard);
 
 
-    console.log(clickedCard,clickedCardIndex, archivedIndex)
 
     if (clickedCardIndex !== -1) {
         taskCardArrays.splice(clickedCardIndex, 1);
