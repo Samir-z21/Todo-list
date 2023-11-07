@@ -11,8 +11,7 @@ const clickedObjs = {}
 let counter = 1;
 
 function editTask(accessTask) {
-    console.log(archivedTasks);
-    console.log(taskCardArrays);
+
     taskEdit.showModal();
 
     const taskModify = document.querySelector('#taskModify');
@@ -20,7 +19,8 @@ function editTask(accessTask) {
     const editTaskDescription = document.getElementById('editTaskDescription');
     const editTaskDueDate = document.getElementById('editTaskDueDate');
     const modifyProjectList = document.getElementById('modifyProjectList');
-    const modifyCheckbox = document.getElementById("modifyCheckbox");
+    const modifyCheckbox = document.getElementById('modifyCheckbox');
+    const modifyDelete = document.getElementById('modifyDelete');
     
     editTaskTitle.value = accessTask.newTaskObj.title;
     editTaskDescription.value = accessTask.newTaskObj.description;
@@ -54,6 +54,21 @@ function editTask(accessTask) {
         taskEdit.close();  
     });
 
+    modifyDelete.addEventListener('click', () => {
+        const dltClickedCardIndex = taskCardArrays.indexOf(clickedCards[clickedCard]);
+        const dltArchivedIndex = archivedTasks.indexOf(clickedCards[clickedCard]);
+        taskEdit.close();
+        if (dltClickedCardIndex !== -1) {
+            taskCardArrays.splice(dltClickedCardIndex, 1);
+        };
+    
+        if (dltArchivedIndex !== -1) {
+            archivedTasks.splice(dltArchivedIndex, 1);
+        };
+        
+        filterTasks();
+    })
+
     taskModify.addEventListener('click', () => {
 
         clickedObjs[clickedObj].title = editTaskTitle.value;
@@ -63,26 +78,20 @@ function editTask(accessTask) {
         
         //console.log(archivedTasks)
 
+       
+    
+        clickedCards[clickedCard].getElementsByClassName('projectName')[0].textContent = modifyProjectList.value;
+        countDays(clickedCards[clickedCard].getElementsByClassName('dayCount')[0], accessTask);
+        clickedCards[clickedCard].getElementsByClassName('taskTitle')[0].textContent = editTaskTitle.value;
+        clickedCards[clickedCard].getElementsByClassName('taskDueDate')[0].textContent = editTaskDueDate.value;
+        clickedCards[clickedCard].getElementsByClassName('taskCheckbox')[0].checked = modifyCheckbox.checked;
+        clickedCards[clickedCard].style.backgroundColor = colorTask(clickedObjs[clickedObj].projectTitle);
+            
+        taskEdit.close();
+
         const clickedCardIndex = taskCardArrays.indexOf(clickedCards[clickedCard]);
         const archivedIndex = archivedTasks.indexOf(clickedCards[clickedCard]);
-    
-    
-        if (clickedCardIndex !== -1) {
-            clickedCards[clickedCard].getElementsByClassName('projectName')[0].textContent = modifyProjectList.value;
-            countDays(clickedCards[clickedCard].getElementsByClassName('dayCount')[0], accessTask);
-            clickedCards[clickedCard].getElementsByClassName('taskTitle')[0].textContent = editTaskTitle.value;
-            clickedCards[clickedCard].getElementsByClassName('taskDueDate')[0].textContent = editTaskDueDate.value;
-            clickedCards[clickedCard].getElementsByClassName('taskCheckbox')[0].checked = modifyCheckbox.checked;
-            clickedCards[clickedCard].style.backgroundColor = colorTask(clickedObjs[clickedObj].projectTitle);
-            //console.log(taskCardArrays[clickedCardIndex].getElementsByClassName('projectName')[0])
-        };
-    
-        //if (archivedIndex !== -1) {
-        //    archivedTasks.splice(archivedIndex, 1);
-        //};
-    
-        
-        taskEdit.close();
+
         if (modifyCheckbox.checked) {
             if (!archivedTasks.includes(clickedCards[clickedCard])) {
                 archivedTasks.push(clickedCards[clickedCard]);
@@ -109,9 +118,7 @@ function editTask(accessTask) {
     
             clickedCards[clickedCard].getElementsByClassName('taskCheckbox')[0].value = null;
         }
-    
-        console.log(archivedTasks)
-    
+
         filterTasks();
         archive();
     });

@@ -34,7 +34,7 @@ function taskDone(event) {
         }
         
         clickedCard.getElementsByClassName('taskCheckbox')[0].value = true;
-        console.log( clickedCard.getElementsByClassName('taskCheckbox')[0])
+        
     
         clickedCard.style.backgroundColor =  "rgb(153, 105, 105)";
     } else {
@@ -55,7 +55,7 @@ function taskDone(event) {
         clickedCard.getElementsByClassName('taskCheckbox')[0].value = null;
     };
 
-    console.log(archivedTasks)
+    
 
     filterTasks();
     archive();
@@ -86,7 +86,7 @@ function deleteTask (event) {
     const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
     const archivedIndex = archivedTasks.indexOf(clickedCard);
 
-
+    
 
     if (clickedCardIndex !== -1) {
         taskCardArrays.splice(clickedCardIndex, 1);
