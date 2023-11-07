@@ -125,7 +125,9 @@ function editTask(accessTask) {
 };
 
 
-
+function editProject () {
+    
+} 
 
   
 

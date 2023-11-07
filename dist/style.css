@@ -43,6 +43,20 @@ button {
     grid-row: 1/3;
 }
 
+#projectsContainer {
+    width: 100%;
+    
+}
+
+
+.topProjectItem {
+    display: flex;
+    justify-content: space-between;
+}
+.projectTools {
+    display: flex;
+}
+
 /*Tasks container */
 #tasks-container {
     border: 1px solid green;
@@ -82,12 +96,12 @@ button {
     cursor: pointer;
 }
 
-.taskRemoveBtn {
+.taskRemoveBtn, .projectRemoveBtn {
     cursor: pointer;
-    border: 1px solid darkred;
+    
 }
 
-.openTask {
+.openTask, .openProject {
     cursor: pointer;
 
 }

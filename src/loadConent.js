@@ -1,12 +1,14 @@
 import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
-import { taskDone,deleteTask } from './dlt-archv';
+import { taskDone,deleteTask, projectDone } from './dlt-archv';
 import filterTasks from './filter';
 import { editTask} from './edit';
 
 
 
 const taskCardArrays = [];
+const projectDivArray = [];
+const projectsContainer = document.getElementById('projectsContainer');
 // adding Task content
 
 function loadTask(title, description, dueDate, projectTitle) {
@@ -67,9 +69,10 @@ function loadTask(title, description, dueDate, projectTitle) {
     bottomCard.append(rightSide);
     
     taskCard.appendChild(bottomCard);
-
+    
     taskCardArrays.push(taskCard);
-
+    
+    
     
 
     
@@ -78,24 +81,48 @@ function loadTask(title, description, dueDate, projectTitle) {
     
 }
 
-// adding project content 
-const projectsContainer = document.getElementById('sidebar');
 
 function loadProject (title, description, dueDate, color) {
     let accessProject = addProject(title, description, dueDate, color);
 
     const projectItem = createNamedDiv("projectItem");
+    
+    projectItem.style.backgroundColor = color;
+    
+    const topProjectItem = createNamedDiv("topProjectItem");
+    
+        topProjectItem.appendChild(createInfoDiv("projectTitle", accessProject.newProjectObj.title));
+        const projectTools = createNamedDiv("projectTools");
+            const openProject = createNamedDiv("openProject", "↗️");
 
-        projectItem.style.backgroundColor = color;
+            openProject.addEventListener("click",(event) => {
+                editProject(accessProject);
+            })
 
-        //change color to white if black is backgroundColor
+            const projectCheckbox = document.createElement("input");
+            projectCheckbox.type = "checkbox";
+            projectCheckbox.classList.add("projectCheckbox");
+            projectCheckbox.value = null;
 
-        projectItem.appendChild(createInfoDiv("projectTitle", accessProject.newProjectObj.title));
+            projectCheckbox.addEventListener('click', event => {
+                projectDone(event) 
+            })
+            
 
-        projectItem.appendChild(createInfoDiv('projectDueDate', accessProject.newProjectObj.dueDate));
-
-        linkProjectName(title);
+            projectTools.appendChild(projectCheckbox);
+            projectTools.appendChild(createInfoDiv("projectRemoveBtn", "🗑️" ));
+            projectTools.appendChild(openProject);
         
+        topProjectItem.appendChild(projectTools);
+
+
+    projectItem.appendChild(topProjectItem)
+    
+    projectItem.appendChild(createInfoDiv('projectDueDate', accessProject.newProjectObj.dueDate));
+
+    linkProjectName(title);
+
+    projectDivArray.push(projectItem);
 
     projectsContainer.appendChild(projectItem);
 }
@@ -111,15 +138,24 @@ function createInfoDiv (cssClass, text) {
             div.addEventListener("click",event => {
                 deleteTask(event);
             })
-        };
+        }
+
+        if (cssClass === "projectRemoveBtn") {
+            div.addEventListener('click', event => {
+                deleteProject(event)
+            })
+        }
+
+        
     return div
 }
 
 // quick createNamedDiv
-function createNamedDiv (name) {
+function createNamedDiv (name, text) {
     const divsObjects = {};
     divsObjects[name] = document.createElement('div');
     divsObjects[name].classList.add(name);
+    divsObjects[name].textContent = text;
     return divsObjects[name]
 }
 
@@ -138,5 +174,5 @@ function countDays (div, accessTask) {
 }
 
 
-export {loadTask, loadProject, taskCardArrays, countDays }
+export {loadTask, loadProject, taskCardArrays, projectDivArray, countDays }
 //
