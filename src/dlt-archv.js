@@ -10,12 +10,13 @@ const checkboxArchive = document.getElementById("checkboxArchive");
 const archivedTasks = []
 
 function taskDone(event) {
+    
     const clickedCard = findCardInArray(taskCardArrays) || findCardInArray(archivedTasks);
 
     function findCardInArray(array) {
       return array.find(card => card.querySelector('.taskCheckbox') === event.target);
     }
-  
+    
     const archivedIndex = archivedTasks.indexOf(clickedCard);
     const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
 
@@ -31,7 +32,10 @@ function taskDone(event) {
         if (clickedCardIndex !== -1) {
           taskCardArrays.splice(clickedCardIndex, 1);
         }
-
+        
+        clickedCard.getElementsByClassName('taskCheckbox')[0].value = true;
+        console.log( clickedCard.getElementsByClassName('taskCheckbox')[0])
+    
         clickedCard.style.backgroundColor =  "rgb(153, 105, 105)";
     } else {
         
@@ -47,9 +51,12 @@ function taskDone(event) {
         if (!colorTask(clickedCardProjectTitle)) {
             clickedCard.style.backgroundColor = "blue"
         } 
+
+        clickedCard.getElementsByClassName('taskCheckbox')[0].value = null;
     };
 
-    
+    console.log(archivedTasks)
+
     filterTasks();
     archive();
 }

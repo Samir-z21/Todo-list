@@ -1,9 +1,8 @@
 import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
-import { taskDone } from './dlt-archv';
+import { taskDone,deleteTask } from './dlt-archv';
 import filterTasks from './filter';
-import { deleteTask } from './dlt-archv';
-import { editTask, modifyTask } from './edit';
+import { editTask} from './edit';
 
 
 
@@ -43,13 +42,18 @@ function loadTask(title, description, dueDate, projectTitle) {
             const taskCheckbox = document.createElement("input");
             taskCheckbox.type = "checkbox";
             taskCheckbox.classList.add("taskCheckbox");
+            taskCheckbox.value = null;
+
+            taskCheckbox.addEventListener('click', (event) => {
+                taskDone(event)
+            });
             
             const openTask = document.createElement('div');
             openTask.textContent = "↗️";
             openTask.classList.add("openTask")
             
             openTask.addEventListener("click",(event) => {
-                    editTask(accessTask, projectTitle, event);
+                    editTask(accessTask);
                 })
             
             
@@ -68,9 +72,7 @@ function loadTask(title, description, dueDate, projectTitle) {
 
     
 
-    taskCheckbox.addEventListener('click', (event) => {
-        taskDone(event)
-    });
+    
 
     filterTasks();
     
@@ -121,13 +123,17 @@ function createNamedDiv (name) {
     return divsObjects[name]
 }
 
+
+
 function countDays (div, accessTask) {
     const today = new Date();
     const objDate = new Date (accessTask.newTaskObj.dueDate);
     div.textContent = ` Due in: ${ Math.ceil(( objDate - today)/ (1000 * 60 * 60 * 24))} days`;
 
     if ((objDate - today) < 0) {
-        div.style.color = "red"
+        div.style.color = "red";
+    } else {
+        div.style.color = 'black';
     }
 }
 
