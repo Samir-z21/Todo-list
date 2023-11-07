@@ -3,12 +3,15 @@ import {linkProjectName, colorTask} from "./link-ProjectTask";
 import { taskDone } from './dlt-archv';
 import filterTasks from './filter';
 import { deleteTask } from './dlt-archv';
-import { editTask } from './edit';
+import { editTask, modifyTask } from './edit';
+
+
 
 const taskCardArrays = [];
 // adding Task content
 
 function loadTask(title, description, dueDate, projectTitle) {
+   
     let accessTask = addTask(title, description, dueDate, projectTitle);
 
     const taskCard = createNamedDiv("taskCard");
@@ -19,21 +22,12 @@ function loadTask(title, description, dueDate, projectTitle) {
         topDetailsCard.appendChild(createInfoDiv('projectName', accessTask.newTaskObj.projectTitle));
 
         const dayCount = document.createElement('div');
-        const today = new Date();
-        const objDate = new Date (accessTask.newTaskObj.dueDate);
-        dayCount.textContent = ` Due in: ${ Math.ceil(( objDate - today)/ (1000 * 60 * 60 * 24))} days`;
-
-            if ((objDate - today) < 0) {
-                dayCount.style.color = "red"
-            }
+        dayCount.classList.add("dayCount")
+        countDays(dayCount, accessTask);
         topDetailsCard.appendChild(dayCount);
 
     taskCard.appendChild(topDetailsCard);
 
-
-
-    //(a.querySelector('.taskDueDate').textContent);
-    //topDetailsCard.appenndChild(projecTitle, dayCount)
 
     const bottomCard = createNamedDiv("bottomCard");
     
@@ -50,11 +44,18 @@ function loadTask(title, description, dueDate, projectTitle) {
             taskCheckbox.type = "checkbox";
             taskCheckbox.classList.add("taskCheckbox");
             
-
+            const openTask = document.createElement('div');
+            openTask.textContent = "↗️";
+            openTask.classList.add("openTask")
+            
+            openTask.addEventListener("click",(event) => {
+                    editTask(accessTask, projectTitle, event);
+                })
+            
             
             rightSide.appendChild(taskCheckbox)    
             rightSide.appendChild(createInfoDiv("taskRemoveBtn", "🗑️" ));
-            rightSide.appendChild(createInfoDiv("openTask", "↗️"));
+            rightSide.appendChild(openTask)
 
     
     //appending all the divs created
@@ -109,12 +110,6 @@ function createInfoDiv (cssClass, text) {
                 deleteTask(event);
             })
         };
-
-        if (cssClass === "openTask") {
-            div.addEventListener("click",event => {
-                editTask(event);
-            })
-        };
     return div
 }
 
@@ -126,7 +121,16 @@ function createNamedDiv (name) {
     return divsObjects[name]
 }
 
+function countDays (div, accessTask) {
+    const today = new Date();
+    const objDate = new Date (accessTask.newTaskObj.dueDate);
+    div.textContent = ` Due in: ${ Math.ceil(( objDate - today)/ (1000 * 60 * 60 * 24))} days`;
+
+    if ((objDate - today) < 0) {
+        div.style.color = "red"
+    }
+}
 
 
-export {loadTask, loadProject, taskCardArrays}
+export {loadTask, loadProject, taskCardArrays, countDays }
 //

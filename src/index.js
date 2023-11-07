@@ -64,12 +64,5 @@ checkboxArchive.addEventListener('click', () => {
     archive();
 });
 
-//delete listener 
-
-
-
-
-//projectConfirm.addEventListener('click',projectStoreObject())
-
 
 

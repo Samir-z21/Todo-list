@@ -63,7 +63,7 @@
     </dialog>
 
     <dialog id="projectDialog">
-        <form id="projectForm" action="push">
+        <form id="projectForm">
             <button class="close-btn">x</button>
 
             <input type="text" id="projectTitle" placeholder="Title"  maxlength="10"  required>
@@ -86,6 +86,33 @@
               </select>
             <button id="projectConfirm">Add Project</button>
         </form>
+    </dialog>
+
+    <dialog id="taskEdit">
+        <button class="closeModifyTask">x</button>
+            <label for="taskTitle"> Task Title
+                <input type="text" id="editTaskTitle" name="taskTitle"  maxlength="10"  required>
+            </label>
+
+            <label for="editTaskDescription"> Task Description
+                <input type="text" id="editTaskDescription" name="editTaskDescription" maxlength="30"  required>
+            </label>
+
+            <label for="editTaskDueDate"> Task Due Date
+                <input type="date" id="editTaskDueDate" placeholder="Due Date"  required>
+            </label>
+
+            <label for="modifyProjectList">Project List
+                <select id="modifyProjectList"> 
+                    <option value=""></option>
+                </select>
+            </label>
+            
+
+            <label>
+                <button id="modifyDelete">🗑️</button>
+            </label>
+                <button id="taskModify">Modify Task</button>
     </dialog>
 
 </body>

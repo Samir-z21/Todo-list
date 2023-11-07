@@ -3,7 +3,7 @@ import filterTasks from './filter';
 import { colorTask } from "./link-ProjectTask";
 
 
-//const deleteTask = document.getElementsByClassName("taskRemoveBtn");
+
 
 const tasksContainer = document.getElementById('tasks-container');
 const checkboxArchive = document.getElementById("checkboxArchive");
@@ -92,4 +92,4 @@ function deleteTask (event) {
     filterTasks();
 }
 
-export {taskDone, archive, deleteTask}
+export {taskDone, archive, deleteTask, archivedTasks}
