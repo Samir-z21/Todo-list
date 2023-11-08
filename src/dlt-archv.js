@@ -1,6 +1,6 @@
 import {taskCardArrays, projectDivArray} from "./loadConent";
 import filterTasks from './filter';
-import { colorTask } from "./link-ProjectTask";
+import { colorTask, rmvTasksArchProj } from "./link-ProjectTask";
 
 
 const tasksContainer = document.getElementById('tasks-container');
@@ -103,7 +103,7 @@ function deleteTask (event) {
 }
 
 
-function projectDone (event) {
+function projectDone (event, accessProject) {
         const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
     
         function findProjectInArray(array) {
@@ -115,7 +115,8 @@ function projectDone (event) {
     
        
         const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
-    
+        const options = Array.from(listProjectColor.getElementsByTagName('option'));
+
         if (event.target.checked) {
             if (!archivedProject.includes(clickedProject)) {
                 archivedProject.push(clickedProject);
@@ -130,7 +131,19 @@ function projectDone (event) {
             projectsContainer.removeChild(clickedProject);
             archivedProjectsContainer.appendChild(clickedProject);
 
+            const colorReturns = document.createElement('option');
+
+            colorReturns.value = accessProject.newProjectObj.color;
+
+            colorReturns.style.backgroundColor = accessProject.newProjectObj.color;
+
+            listProjectColor.appendChild(colorReturns);
             clickedProject.style.backgroundColor =  "grey";
+
+            accessProject.newProjectObj.color = "grey"
+
+            rmvTasksArchProj(projectTitle);
+
         } else {
             if (projectDivArray.length >= 10) {
                 alert("Can't add archived project. Project limit reached");
@@ -144,8 +157,9 @@ function projectDone (event) {
                     archivedProject.splice(archivedProjectIndex, 1);
                 }
                 
-                const options = Array.from(listProjectColor.getElementsByTagName('option'));
-
+               
+                const autoColor = options[0];
+                listProjectColor.removeChild(autoColor);
                 clickedProject.style.backgroundColor = options[0].value;
 
                 archivedProjectsContainer.removeChild(clickedProject);

@@ -105,7 +105,7 @@ function loadProject (title, description, dueDate, color) {
             projectCheckbox.value = null;
 
             projectCheckbox.addEventListener('click', event => {
-                projectDone(event) 
+                projectDone(event, accessProject) 
             })
             
 
