@@ -2,9 +2,11 @@
 import {loadTask , loadProject} from "./loadConent";
 import { projectArray } from "./objectContructor";
 import { removeColorOpt } from "./link-ProjectTask";
+
 // reference to dialogs
 const taskDialog = document.getElementById('taskDialog');
 const projectDialog = document.getElementById('projectDialog');
+const projectColor = document.getElementById('projectColor');
 
 
 // storing Task function
@@ -28,6 +30,7 @@ function storeTask () {
     let dueDate = taskDueDate.value;
     let projectTitle = selectedProject.value
     
+    
    
 
     taskDialog.close();
@@ -49,30 +52,41 @@ function storeProject () {
         alert("Please fill the inputs. The title can't exceed 10 charachters. The description can't exceed 30 charachters");
         return
     }
+    
 
+    const doubleNameCheck = projectArray.find(obj => obj.title === projectTitle.value);
+
+    console.log(projectArray)
 
     let title = projectTitle.value;
     let description = projectDescription.value;
     let dueDate = projectDueDate.value;
     let color = projectColor.value;
     
-    
-    
-    const doubleNameCheck = projectArray.find(obj => obj.title === title);
-
     if (doubleNameCheck) {
         alert("can't use same project name");
         return
     }
-    
+
+   
+
     if (removeColorOpt(color)) {
         alert("Max amount of projects reached")
         return
     };
 
+    
+
+
     projectDialog.close();
 
+    const options = Array.from(projectColor.getElementsByTagName('option'));
+    const chosenOption = options.find(option => option.value === color);
+    projectColor.removeChild(chosenOption);
+    
     loadProject(title, description, dueDate, color);
+
+
 
     projectTitle.value = '';
     projectDescription.value = '';

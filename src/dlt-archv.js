@@ -1,6 +1,7 @@
 import {taskCardArrays, projectDivArray} from "./loadConent";
 import filterTasks from './filter';
-import { colorTask, rmvTasksArchProj } from "./link-ProjectTask";
+import { colorTask, rmvTasksArchProj, addTasksArchProj } from "./link-ProjectTask";
+import { projectArray } from "./objectContructor";
 
 
 const tasksContainer = document.getElementById('tasks-container');
@@ -11,6 +12,7 @@ const archivedProjectsContainer = document.getElementById("archivedProjectsConta
 
 const archivedTasks = [];
 const archivedProject = [];
+const archivedProjectObjs = []
 
 function taskDone(event) {
     
@@ -23,6 +25,7 @@ function taskDone(event) {
     const archivedIndex = archivedTasks.indexOf(clickedCard);
     const clickedCardIndex = taskCardArrays.indexOf(clickedCard);
 
+    console.log(clickedCard);
    
     const clickedCardProjectTitleDiv = clickedCard.getElementsByClassName("projectName");
     const clickedCardProjectTitle = clickedCardProjectTitleDiv[0].textContent;
@@ -80,7 +83,7 @@ function archive (){
 
 function deleteTask (event) {
     
-    const clickedCard = findCardInArray(projectDivArray) || findCardInArray(archivedTasks);
+    const clickedCard = findCardInArray(taskCardArrays) || findCardInArray(archivedTasks);
 
     function findCardInArray(array) {
       return array.find(card => card.querySelector('.taskRemoveBtn') === event.target);
@@ -105,26 +108,48 @@ function deleteTask (event) {
 
 function projectDone (event, accessProject) {
         const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
-    
+
         function findProjectInArray(array) {
-          return array.find(project => project.querySelector('.projectCheckbox') === event.target);
+          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title);
         }
         
-        const archivedProjectIndex = archivedProject.indexOf(clickedProject);
-        const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
-    
-       
         const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
         const options = Array.from(listProjectColor.getElementsByTagName('option'));
+        
+        
+        const clickedObjProject = findProjectObjInArray(projectArray) || findProjectObjInArray(archivedProjectObjs)
+        
+        function findProjectObjInArray(array) {
+            return array.find(() => accessProject.newProjectObj.title === projectTitle);
+        }
+        
+        console.log(clickedObjProject)
+
+        const archivedProjectIndex = archivedProject.indexOf(clickedProject);
+        const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
+        const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
+        const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
 
         if (event.target.checked) {
             if (!archivedProject.includes(clickedProject)) {
                 archivedProject.push(clickedProject);
             }
+
+            console.log(archivedProject)
     
             if (clickedProjectIndex !== -1) {
                 projectDivArray.splice(clickedProjectIndex, 1);
             }
+
+            if (clickedObjProjectIndex !== -1) {
+                projectArray.splice(clickedObjProjectIndex, 1);
+            }
+            
+            if (!archivedProjectObjs.includes(clickedObjProject)) {
+                archivedProjectObjs.push(clickedObjProject);
+            }
+
+
             
             //clickedProject.getElementsByClassName('projectCheckbox')[0].value = true;
             
@@ -140,30 +165,44 @@ function projectDone (event, accessProject) {
             listProjectColor.appendChild(colorReturns);
             clickedProject.style.backgroundColor =  "grey";
 
-            accessProject.newProjectObj.color = "grey"
-
             rmvTasksArchProj(projectTitle);
 
         } else {
             if (projectDivArray.length >= 10) {
+                event.preventDefault()
+                clickedProject.querySelector('.projectCheckbox').checked = true;
                 alert("Can't add archived project. Project limit reached");
                 return
             }else {
                 if (!projectDivArray.includes(clickedProject)) {
                     projectDivArray.push(clickedProject);
                 }
+
+                if (!projectArray.includes(clickedObjProject)) {
+                    projectArray.push(clickedObjProject)
+                }
             
                 if (archivedProjectIndex !== -1) {
                     archivedProject.splice(archivedProjectIndex, 1);
                 }
+
+                if (archivedObjProjectIndex !== -1) {
+                    archivedProjectObjs.splice(archivedObjProjectIndex, 1)
+                }
                 
-               
-                const autoColor = options[0];
-                listProjectColor.removeChild(autoColor);
-                clickedProject.style.backgroundColor = options[0].value;
+
+                const autoColor = options[0].value;
+                listProjectColor.removeChild(options[0]);
+
+
+                clickedProject.style.backgroundColor = autoColor
+                accessProject.newProjectObj.color = autoColor
+                clickedObjProject.color = autoColor
 
                 archivedProjectsContainer.removeChild(clickedProject);
                 projectsContainer.appendChild(clickedProject);
+
+                addTasksArchProj(projectTitle, autoColor)
             
                 //clickedProject.getElementsByClassName('taskCheckbox')[0].value = null;
             }
