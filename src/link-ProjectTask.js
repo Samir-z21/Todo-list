@@ -1,11 +1,14 @@
 import { projectArray, taskArray } from "./objectContructor";
 import { taskCardArrays, projectDivArray } from "./loadConent";
 import { archivedTasks, archive } from "./dlt-archv";
+import filterTasks from "./filter";
 
 const projectList = document.getElementById("projectList");
 const projectColor = document.getElementById('projectColor');
 const modifyProjectList = document.getElementById('modifyProjectList');
 const projectsContainer = document.getElementById('projectsContainer');
+
+const checkboxArchive = document.getElementById('checkboxArchive');
 
 let allTasksInProject = [];
 let objsFound =[];
@@ -61,9 +64,7 @@ function rmvTasksArchProj (projectTitle) {
 
     allTasksInProject = tasksInProject.concat(archivedTasksInProject);
 
-    allTasksInProject.forEach(div => {
-        tasksContainer.removeChild(div);
-    });
+    
 
     for (const item of taskCardArrays) {
         const index = tasksInProject.indexOf(item);
@@ -88,6 +89,16 @@ function rmvTasksArchProj (projectTitle) {
         }
     };
 
+    tasksInProject.forEach(div => { 
+        tasksContainer.removeChild(div);
+    });
+
+    if(checkboxArchive.checked) {
+        archivedTasksInProject.forEach(div => { 
+            tasksContainer.removeChild(div);
+        });
+    }
+
     const projectOptions = Array.from(projectList.getElementsByTagName('option'));
     const modifyProjectOptions = Array.from(modifyProjectList.getElementsByTagName('option'));
 
@@ -103,17 +114,21 @@ function rmvTasksArchProj (projectTitle) {
 
 function addTasksArchProj (projectTitle, autoColor) {
     const clickedProjectTasks = allTasksInProject.filter(task => task.querySelector('.projectName').textContent === projectTitle);
-    const clickedProjectTasksNonArchvied = clickedProjectTasks.filter(task => task.getElementsByClassName('taskCheckbox').value == null);
-    const clickedCardProjectTasksArchived = clickedProjectTasks.filter(task => task.getElementsByClassName('taskCheckbox').value == true); 
+    const clickedProjectTasksNonArchvied = clickedProjectTasks.filter(task => task.querySelector('.taskCheckbox').value == false);
+    const clickedCardProjectTasksArchived = clickedProjectTasks.filter(task => task.querySelector('.taskCheckbox').value === "true"); 
 
-    clickedProjectTasksNonArchvied.forEach(div => {
-        tasksContainer.appendChild(div);
-        div.style.backgroundColor = autoColor;
-        if (div.querySelector('.taskCheckbox').checked) {
-            div.style.backgroundColor = "rgb(153, 105, 105)";
-        }
-        archive();
-    });
+
+    clickedProjectTasks.forEach(item => {
+        console.log(item.querySelector('.taskCheckbox').value)
+    })
+
+    console.log(clickedProjectTasks[0].querySelector('.taskCheckbox').value)
+
+    console.log(clickedProjectTasks)
+    console.log(clickedProjectTasksNonArchvied)
+    console.log(clickedCardProjectTasksArchived)
+
+    
 
     clickedProjectTasksNonArchvied.forEach(item => {
         if (!taskCardArrays.includes(item)) {
@@ -136,6 +151,20 @@ function addTasksArchProj (projectTitle, autoColor) {
         }
     })
 
+
+    clickedProjectTasksNonArchvied.forEach(div => {
+        tasksContainer.appendChild(div)
+        div.style.backgroundColor = autoColor;
+    });
+
+    clickedCardProjectTasksArchived.forEach(div => {
+        if(checkboxArchive.checked) {
+        tasksContainer.appendChild(div)
+        div.style.backgroundColor = "rgb(153, 105, 105)";
+        }
+    });
+
+   
     
 
     const projectOptions = Array.from(projectList.getElementsByTagName('option'));

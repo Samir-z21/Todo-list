@@ -63,6 +63,3 @@ const checkboxArchive = document.getElementById("checkboxArchive");
 checkboxArchive.addEventListener('click', () => {
     archive();
 });
-
-
-

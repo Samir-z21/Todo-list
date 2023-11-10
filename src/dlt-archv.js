@@ -118,36 +118,47 @@ function projectDone (event, accessProject) {
         
         
         const clickedObjProject = findProjectObjInArray(projectArray) || findProjectObjInArray(archivedProjectObjs)
-        
+        console.log(projectArray)
         function findProjectObjInArray(array) {
-            return array.find(() => accessProject.newProjectObj.title === projectTitle);
+            return array.find((obj) => obj.title === projectTitle);
         }
         
         console.log(clickedObjProject)
 
-        const archivedProjectIndex = archivedProject.indexOf(clickedProject);
-        const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
-        const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
-        const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
+        
 
         if (event.target.checked) {
+
+            const archivedProjectIndex = archivedProject.indexOf(clickedProject);
+            const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
+            const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
+            const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
+
             if (!archivedProject.includes(clickedProject)) {
                 archivedProject.push(clickedProject);
             }
 
             console.log(archivedProject)
-    
+            
+            if (!archivedProjectObjs.includes(clickedObjProject)) {
+                archivedProjectObjs.push(clickedObjProject);
+            }
+
+            console.log(archivedProjectObjs)
+
+
             if (clickedProjectIndex !== -1) {
                 projectDivArray.splice(clickedProjectIndex, 1);
             }
+
+            console.log(projectDivArray)
 
             if (clickedObjProjectIndex !== -1) {
                 projectArray.splice(clickedObjProjectIndex, 1);
             }
             
-            if (!archivedProjectObjs.includes(clickedObjProject)) {
-                archivedProjectObjs.push(clickedObjProject);
-            }
+            console.log(projectArray)
+            
 
 
             
@@ -168,27 +179,41 @@ function projectDone (event, accessProject) {
             rmvTasksArchProj(projectTitle);
 
         } else {
+
+            const archivedProjectIndex = archivedProject.indexOf(clickedProject);
+            const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
+            const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
+            const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
+
             if (projectDivArray.length >= 10) {
                 event.preventDefault()
                 clickedProject.querySelector('.projectCheckbox').checked = true;
                 alert("Can't add archived project. Project limit reached");
                 return
             }else {
+                if (archivedProjectIndex !== -1) {
+                    archivedProject.splice(archivedProjectIndex, 1);
+                }
+
+                console.log(archivedProject);
+
+                if (archivedObjProjectIndex !== -1) {
+                    archivedProjectObjs.splice(archivedObjProjectIndex, 1)
+                }
+
+                console.log(archivedProjectObjs)
+
                 if (!projectDivArray.includes(clickedProject)) {
                     projectDivArray.push(clickedProject);
                 }
+
+                console.log(projectDivArray)
 
                 if (!projectArray.includes(clickedObjProject)) {
                     projectArray.push(clickedObjProject)
                 }
             
-                if (archivedProjectIndex !== -1) {
-                    archivedProject.splice(archivedProjectIndex, 1);
-                }
-
-                if (archivedObjProjectIndex !== -1) {
-                    archivedProjectObjs.splice(archivedObjProjectIndex, 1)
-                }
+                console.log(projectArray)
                 
 
                 const autoColor = options[0].value;
