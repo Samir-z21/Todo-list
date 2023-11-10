@@ -99,6 +99,7 @@ function rmvTasksArchProj (projectTitle) {
         });
     }
 
+
     const projectOptions = Array.from(projectList.getElementsByTagName('option'));
     const modifyProjectOptions = Array.from(modifyProjectList.getElementsByTagName('option'));
 
@@ -108,7 +109,7 @@ function rmvTasksArchProj (projectTitle) {
     projectList.removeChild(chosenOption);
     modifyProjectList.removeChild(chosenModifyOption);
     
-    console.log(tasksInProject, archivedTasksInProject, allTasksInProject)
+    
 
 }
 
@@ -116,17 +117,6 @@ function addTasksArchProj (projectTitle, autoColor) {
     const clickedProjectTasks = allTasksInProject.filter(task => task.querySelector('.projectName').textContent === projectTitle);
     const clickedProjectTasksNonArchvied = clickedProjectTasks.filter(task => task.querySelector('.taskCheckbox').value == false);
     const clickedCardProjectTasksArchived = clickedProjectTasks.filter(task => task.querySelector('.taskCheckbox').value === "true"); 
-
-
-    clickedProjectTasks.forEach(item => {
-        console.log(item.querySelector('.taskCheckbox').value)
-    })
-
-    console.log(clickedProjectTasks[0].querySelector('.taskCheckbox').value)
-
-    console.log(clickedProjectTasks)
-    console.log(clickedProjectTasksNonArchvied)
-    console.log(clickedCardProjectTasksArchived)
 
     
 

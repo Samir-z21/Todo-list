@@ -118,51 +118,38 @@ function projectDone (event, accessProject) {
         
         
         const clickedObjProject = findProjectObjInArray(projectArray) || findProjectObjInArray(archivedProjectObjs)
-        console.log(projectArray)
+        
         function findProjectObjInArray(array) {
             return array.find((obj) => obj.title === projectTitle);
         }
-        
-        console.log(clickedObjProject)
-
-        
+         
 
         if (event.target.checked) {
 
-            const archivedProjectIndex = archivedProject.indexOf(clickedProject);
             const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
             const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
-            const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
+            
 
             if (!archivedProject.includes(clickedProject)) {
                 archivedProject.push(clickedProject);
             }
 
-            console.log(archivedProject)
-            
+     
             if (!archivedProjectObjs.includes(clickedObjProject)) {
                 archivedProjectObjs.push(clickedObjProject);
             }
 
-            console.log(archivedProjectObjs)
 
 
             if (clickedProjectIndex !== -1) {
                 projectDivArray.splice(clickedProjectIndex, 1);
             }
 
-            console.log(projectDivArray)
 
             if (clickedObjProjectIndex !== -1) {
                 projectArray.splice(clickedObjProjectIndex, 1);
             }
             
-            console.log(projectArray)
-            
-
-
-            
-            //clickedProject.getElementsByClassName('projectCheckbox')[0].value = true;
             
             projectsContainer.removeChild(clickedProject);
             archivedProjectsContainer.appendChild(clickedProject);
@@ -181,8 +168,6 @@ function projectDone (event, accessProject) {
         } else {
 
             const archivedProjectIndex = archivedProject.indexOf(clickedProject);
-            const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
-            const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
             const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
 
             if (projectDivArray.length >= 10) {
@@ -195,27 +180,24 @@ function projectDone (event, accessProject) {
                     archivedProject.splice(archivedProjectIndex, 1);
                 }
 
-                console.log(archivedProject);
-
+             
                 if (archivedObjProjectIndex !== -1) {
                     archivedProjectObjs.splice(archivedObjProjectIndex, 1)
                 }
 
-                console.log(archivedProjectObjs)
+               
 
                 if (!projectDivArray.includes(clickedProject)) {
                     projectDivArray.push(clickedProject);
                 }
 
-                console.log(projectDivArray)
+               
 
                 if (!projectArray.includes(clickedObjProject)) {
                     projectArray.push(clickedObjProject)
                 }
             
-                console.log(projectArray)
                 
-
                 const autoColor = options[0].value;
                 listProjectColor.removeChild(options[0]);
 
@@ -228,13 +210,68 @@ function projectDone (event, accessProject) {
                 projectsContainer.appendChild(clickedProject);
 
                 addTasksArchProj(projectTitle, autoColor)
-            
-                //clickedProject.getElementsByClassName('taskCheckbox')[0].value = null;
+        
             }
         };
     
 
     }
 
+    function deleteProject (accessProject) {
+        const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
 
-export {taskDone, archive, deleteTask, archivedTasks, projectDone}
+        function findProjectInArray(array) {
+          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title);
+        }
+
+        const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
+        const options = Array.from(listProjectColor.getElementsByTagName('option'));
+
+
+        const clickedObjProject = findProjectObjInArray(projectArray) || findProjectObjInArray(archivedProjectObjs)
+        
+        function findProjectObjInArray(array) {
+            return array.find((obj) => obj.title === projectTitle);
+        }
+        
+        const archivedProjectIndex = archivedProject.indexOf(clickedProject);
+        const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
+        const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
+        const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
+
+
+        if (archivedProjectIndex !== -1 ) {
+            archivedProject.slice(archivedProjectIndex);
+        }
+ 
+        
+        if (archivedObjProjectIndex !== -1 ) {
+            archivedProjectObjs.slice(archivedObjProjectIndex);
+        }
+
+
+        if (clickedProjectIndex !== -1) {
+            projectDivArray.splice(clickedProjectIndex, 1);
+        }
+
+
+        if (clickedObjProjectIndex !== -1) {
+            projectArray.splice(clickedObjProjectIndex, 1);
+        }
+
+        if (clickedProject.parentNode === projectsContainer) {
+            projectsContainer.removeChild(clickedProject);
+        } else {
+            archivedProjectsContainer.removeChild(clickedProject);
+        }
+
+        const colorReturns = document.createElement('option');
+        colorReturns.value = accessProject.newProjectObj.color;
+        colorReturns.style.backgroundColor = accessProject.newProjectObj.color;
+        listProjectColor.appendChild(colorReturns);
+
+        rmvTasksArchProj (projectTitle)
+    }
+
+
+export {taskDone, archive, deleteTask, archivedTasks, projectDone, deleteProject}

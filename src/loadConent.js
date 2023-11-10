@@ -1,6 +1,6 @@
 import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
-import { taskDone,deleteTask, projectDone } from './dlt-archv';
+import { taskDone,deleteTask, projectDone, deleteProject } from './dlt-archv';
 import filterTasks from './filter';
 import { editTask} from './edit';
 
@@ -108,9 +108,16 @@ function loadProject (title, description, dueDate, color) {
                 projectDone(event, accessProject) 
             })
             
+            const projectRemoveBtn = document.createElement('div');
+            projectRemoveBtn.classList.add("projectRemoveBtn");
+            projectRemoveBtn.textContent = "🗑️";
+
+            projectRemoveBtn.addEventListener('click', () => {
+                deleteProject(accessProject)
+            })
 
             projectTools.appendChild(projectCheckbox);
-            projectTools.appendChild(createInfoDiv("projectRemoveBtn", "🗑️" ));
+            projectTools.appendChild(projectRemoveBtn);
             projectTools.appendChild(openProject);
         
         topProjectItem.appendChild(projectTools);
@@ -140,12 +147,7 @@ function createInfoDiv (cssClass, text) {
             })
         }
 
-        if (cssClass === "projectRemoveBtn") {
-            div.addEventListener('click', event => {
-                deleteProject(event)
-            })
-        }
-
+       
         
     return div
 }
