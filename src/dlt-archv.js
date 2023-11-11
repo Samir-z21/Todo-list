@@ -2,6 +2,7 @@ import {taskCardArrays, projectDivArray} from "./loadConent";
 import filterTasks from './filter';
 import { colorTask, rmvTasksArchProj, addTasksArchProj } from "./link-ProjectTask";
 import { projectArray } from "./objectContructor";
+import {changeColorOptions} from "./edit"
 
 
 const tasksContainer = document.getElementById('tasks-container');
@@ -163,8 +164,8 @@ function projectDone (event, accessProject) {
             listProjectColor.appendChild(colorReturns);
             clickedProject.style.backgroundColor =  "grey";
 
-            rmvTasksArchProj(projectTitle);
-
+            rmvTasksArchProj(projectTitle, clickedProject);
+            
         } else {
 
             const archivedProjectIndex = archivedProject.indexOf(clickedProject);
@@ -213,11 +214,16 @@ function projectDone (event, accessProject) {
         
             }
         };
-    
+        
+        const clickedModifyProjectColor = document.createElement('option');
+        clickedModifyProjectColor.value = accessProject.newProjectObj.color;
+        clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
+
+        changeColorOptions(clickedModifyProjectColor, event);
 
     }
 
-    function deleteProject (accessProject) {
+    function deleteProject (accessProject, event) {
         const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
 
         function findProjectInArray(array) {
@@ -265,13 +271,22 @@ function projectDone (event, accessProject) {
             archivedProjectsContainer.removeChild(clickedProject);
         }
 
-        const colorReturns = document.createElement('option');
-        colorReturns.value = accessProject.newProjectObj.color;
-        colorReturns.style.backgroundColor = accessProject.newProjectObj.color;
-        listProjectColor.appendChild(colorReturns);
+        
+        if (!(clickedProject.querySelector('.projectCheckbox').checked)) {
+            const colorReturns = document.createElement('option');
+            colorReturns.value = accessProject.newProjectObj.color;
+            colorReturns.style.backgroundColor = accessProject.newProjectObj.color;
+            listProjectColor.appendChild(colorReturns);
+        }
 
-        rmvTasksArchProj (projectTitle)
+        rmvTasksArchProj (projectTitle, clickedProject);
+
+        const clickedModifyProjectColor = document.createElement('option');
+        clickedModifyProjectColor.value = accessProject.newProjectObj.color;
+        clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
+            
+        changeColorOptions(clickedModifyProjectColor, event);
     }
 
 
-export {taskDone, archive, deleteTask, archivedTasks, projectDone, deleteProject}
+export {archive, taskDone, deleteTask, archivedTasks, projectDone, deleteProject, archivedProject, archivedProjectObjs}

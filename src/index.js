@@ -38,7 +38,7 @@ taskConfirm.addEventListener('click', event => {
 const projectConfirm = document.getElementById('projectConfirm');
 projectConfirm.addEventListener('click', event => {
     event.preventDefault();
-    storeProject();
+    storeProject(event);
 });
 
 

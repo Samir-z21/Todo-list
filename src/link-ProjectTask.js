@@ -58,7 +58,7 @@ function removeColorOpt (color) {
 }
 
 
-function rmvTasksArchProj (projectTitle) {
+function rmvTasksArchProj (projectTitle, clickedProject) {
     const tasksInProject = taskCardArrays.filter(card => card.querySelector('.projectName').textContent === projectTitle);
     const archivedTasksInProject = archivedTasks.filter(card => card.querySelector('.projectName').textContent === projectTitle);
 
@@ -105,10 +105,11 @@ function rmvTasksArchProj (projectTitle) {
 
     const chosenOption = projectOptions.find(opt => opt.value === projectTitle);
     const chosenModifyOption = modifyProjectOptions.find(opt => opt.value === projectTitle);
-
-    projectList.removeChild(chosenOption);
-    modifyProjectList.removeChild(chosenModifyOption);
-    
+    console.log(clickedProject)
+    if (!(clickedProject.querySelector('.projectCheckbox').checked)) {
+        projectList.removeChild(chosenOption);
+        modifyProjectList.removeChild(chosenModifyOption);
+    }
     
 
 }

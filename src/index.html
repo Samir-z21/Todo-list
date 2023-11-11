@@ -126,6 +126,35 @@
             </label>
                 <button id="taskModify">Modify Task</button>
     </dialog>
+    
+    <dialog id="projectEdit">
+        <button class="closeModifyProject">x</button>
+            <label for="projectTitle"> Project Title
+                <input type="text" id="editProjectTitle" name="projectTitle"  maxlength="10"  required>
+            </label>
 
+            <label for="editprojectDescription"> Task Description
+                <input type="text" id="editProjectDescription" name="editProjectDescription" maxlength="30"  required>
+            </label>
+
+            <label for="editProjectDueDate"> Task Due Date
+                <input type="date" id="editProjectDueDate" placeholder="Due Date"  required>
+            </label>
+
+            <label for="modifyProjectColorList">Project List
+                <select id="modifyProjectColorList"> 
+                    
+                </select>
+            </label>
+            
+            <label> Archive
+                <input type="checkbox" id="modifyProjectCheckbox">
+            </label>
+
+            <label>
+                <button id="modifyProjectDelete">🗑️</button>
+            </label>
+                <button id="projectModify">Modify Project</button>
+    </dialog>
 </body>
 </html>

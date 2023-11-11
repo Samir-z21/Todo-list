@@ -2,7 +2,7 @@ import {addTask, addProject} from './objectContructor';
 import {linkProjectName, colorTask} from "./link-ProjectTask";
 import { taskDone,deleteTask, projectDone, deleteProject } from './dlt-archv';
 import filterTasks from './filter';
-import { editTask} from './edit';
+import { editTask, editProject, changeColorOptions } from './edit';
 
 
 
@@ -82,7 +82,7 @@ function loadTask(title, description, dueDate, projectTitle) {
 }
 
 
-function loadProject (title, description, dueDate, color) {
+function loadProject (title, description, dueDate, color, event) {
     let accessProject = addProject(title, description, dueDate, color);
 
     const projectItem = createNamedDiv("projectItem");
@@ -96,7 +96,7 @@ function loadProject (title, description, dueDate, color) {
             const openProject = createNamedDiv("openProject", "↗️");
 
             openProject.addEventListener("click",(event) => {
-                editProject(accessProject);
+                editProject(accessProject, event);
             })
 
             const projectCheckbox = document.createElement("input");
@@ -112,8 +112,8 @@ function loadProject (title, description, dueDate, color) {
             projectRemoveBtn.classList.add("projectRemoveBtn");
             projectRemoveBtn.textContent = "🗑️";
 
-            projectRemoveBtn.addEventListener('click', () => {
-                deleteProject(accessProject)
+            projectRemoveBtn.addEventListener('click', (event) => {
+                deleteProject(accessProject, event)
             })
 
             projectTools.appendChild(projectCheckbox);
@@ -132,6 +132,12 @@ function loadProject (title, description, dueDate, color) {
     projectDivArray.push(projectItem);
 
     projectsContainer.appendChild(projectItem);
+
+    const clickedModifyProjectColor = document.createElement('option');
+    clickedModifyProjectColor.value = accessProject.newProjectObj.color;
+    clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
+        
+    changeColorOptions(clickedModifyProjectColor, event);
 }
 
 

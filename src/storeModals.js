@@ -84,7 +84,7 @@ function storeProject () {
     const chosenOption = options.find(option => option.value === color);
     projectColor.removeChild(chosenOption);
     
-    loadProject(title, description, dueDate, color);
+    loadProject(title, description, dueDate, color, event);
 
 
 
