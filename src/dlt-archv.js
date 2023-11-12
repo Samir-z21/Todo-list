@@ -13,7 +13,9 @@ const archivedProjectsContainer = document.getElementById("archivedProjectsConta
 
 const archivedTasks = [];
 const archivedProject = [];
-const archivedProjectObjs = []
+const archivedProjectObjs = [];
+let nameTrackerNonArchived = [];
+let nameTrackerArchived = []
 
 function taskDone(event) {
     
@@ -111,7 +113,7 @@ function projectDone (event, accessProject) {
         const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
 
         function findProjectInArray(array) {
-          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title);
+          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title && project.querySelector('.projectDueDate').textContent === accessProject.newProjectObj.dueDate );
         }
         
         const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
@@ -123,7 +125,9 @@ function projectDone (event, accessProject) {
         function findProjectObjInArray(array) {
             return array.find((obj) => obj.title === projectTitle);
         }
-         
+
+
+         console.log(clickedObjProject)
 
         if (event.target.checked) {
 
@@ -176,7 +180,12 @@ function projectDone (event, accessProject) {
                 clickedProject.querySelector('.projectCheckbox').checked = true;
                 alert("Can't add archived project. Project limit reached");
                 return
-            }else {
+            }else if (trackNames (clickedObjProject)) {
+                event.preventDefault()
+                clickedProject.querySelector('.projectCheckbox').checked = true;
+                alert("Can't add archived project. This project name is already in use");
+                return  
+            } else { 
                 if (archivedProjectIndex !== -1) {
                     archivedProject.splice(archivedProjectIndex, 1);
                 }
@@ -213,6 +222,8 @@ function projectDone (event, accessProject) {
                 addTasksArchProj(projectTitle, autoColor)
         
             }
+
+            
         };
         
         const clickedModifyProjectColor = document.createElement('option');
@@ -220,14 +231,15 @@ function projectDone (event, accessProject) {
         clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
 
         changeColorOptions(clickedModifyProjectColor, event);
-
+        
     }
 
-    function deleteProject (accessProject, event) {
+    function deleteProject (accessProject, event, editProjectTitle) {
         const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
 
+        console.log(clickedProject)
         function findProjectInArray(array) {
-          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title);
+          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title || project.querySelector('.projectTitle').textContent === editProjectTitle.value );
         }
 
         const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
@@ -286,6 +298,16 @@ function projectDone (event, accessProject) {
         clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
             
         changeColorOptions(clickedModifyProjectColor, event);
+    }
+
+    function trackNames (clickedObjProject) {
+        console.log(projectArray);
+        console.log(archivedProjectObjs);
+        nameTrackerNonArchived = projectArray.map(obj => obj.title)
+        nameTrackerArchived = (archivedProjectObjs.map(obj => obj.title))
+
+        return nameTrackerNonArchived.includes(clickedObjProject.title)
+        
     }
 
 

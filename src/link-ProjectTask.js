@@ -105,13 +105,10 @@ function rmvTasksArchProj (projectTitle, clickedProject) {
 
     const chosenOption = projectOptions.find(opt => opt.value === projectTitle);
     const chosenModifyOption = modifyProjectOptions.find(opt => opt.value === projectTitle);
-    console.log(clickedProject)
-    if (!(clickedProject.querySelector('.projectCheckbox').checked)) {
-        projectList.removeChild(chosenOption);
-        modifyProjectList.removeChild(chosenModifyOption);
-    }
+    projectList.removeChild(chosenOption);
+    modifyProjectList.removeChild(chosenModifyOption);
     
-
+    
 }
 
 function addTasksArchProj (projectTitle, autoColor) {

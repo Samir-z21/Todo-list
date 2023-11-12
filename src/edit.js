@@ -192,7 +192,7 @@ function editProject (accessProject, event) {
     
         modifyProjectDelete.addEventListener('click', () => {
             projectEdit.close();  
-            deleteProject(accessProject, event);
+            deleteProject(accessProject, event, editProjectTitle );
         })
     
         projectModify.addEventListener('click', () => {
