@@ -55,7 +55,7 @@ function storeProject () {
     
 
     const doubleNameCheck = projectArray.find(obj => obj.title === projectTitle.value);
-
+    console.log(projectArray)
 
 
     let title = projectTitle.value;

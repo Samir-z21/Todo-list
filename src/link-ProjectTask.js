@@ -58,7 +58,7 @@ function removeColorOpt (color) {
 }
 
 
-function rmvTasksArchProj (projectTitle, clickedProject) {
+function rmvTasksArchProj (projectTitle, clickedProject, event) {
     const tasksInProject = taskCardArrays.filter(card => card.querySelector('.projectName').textContent === projectTitle);
     const archivedTasksInProject = archivedTasks.filter(card => card.querySelector('.projectName').textContent === projectTitle);
 
@@ -99,14 +99,22 @@ function rmvTasksArchProj (projectTitle, clickedProject) {
         });
     }
 
+        const projectOptions = Array.from(projectList.getElementsByTagName('option'));
+        const modifyProjectOptions = Array.from(modifyProjectList.getElementsByTagName('option'));
+        console.log("hey")
+        const chosenOption = projectOptions.find(opt => opt.value === projectTitle);
+        const chosenModifyOption = modifyProjectOptions.find(opt => opt.value === projectTitle);
+        if (chosenOption) {
+            projectList.removeChild(chosenOption);
+        }
 
-    const projectOptions = Array.from(projectList.getElementsByTagName('option'));
-    const modifyProjectOptions = Array.from(modifyProjectList.getElementsByTagName('option'));
+        if (chosenModifyOption) {
+            modifyProjectList.removeChild(chosenModifyOption);
+        }
+    
+    
 
-    const chosenOption = projectOptions.find(opt => opt.value === projectTitle);
-    const chosenModifyOption = modifyProjectOptions.find(opt => opt.value === projectTitle);
-    projectList.removeChild(chosenOption);
-    modifyProjectList.removeChild(chosenModifyOption);
+    
     
     
 }

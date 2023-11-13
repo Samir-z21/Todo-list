@@ -127,10 +127,17 @@ function projectDone (event, accessProject) {
         }
 
 
-         console.log(clickedObjProject)
+        console.log(clickedObjProject)
 
-        if (event.target.checked) {
-
+        if (event.target.checked)  {
+            if (checkArchivedNames (clickedObjProject)) {
+                console.log(checkArchivedNames (clickedObjProject))
+                event.preventDefault()
+                clickedProject.querySelector('.projectCheckbox').checked = false;
+                alert("Can't add project to archived. This project name is already in use");
+                return  
+            } 
+            console.log(checkArchivedNames (clickedObjProject))
             const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
             const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
             
@@ -180,7 +187,7 @@ function projectDone (event, accessProject) {
                 clickedProject.querySelector('.projectCheckbox').checked = true;
                 alert("Can't add archived project. Project limit reached");
                 return
-            }else if (trackNames (clickedObjProject)) {
+            }else if (checkCurrentNames (clickedObjProject)) {
                 event.preventDefault()
                 clickedProject.querySelector('.projectCheckbox').checked = true;
                 alert("Can't add archived project. This project name is already in use");
@@ -234,39 +241,54 @@ function projectDone (event, accessProject) {
         
     }
 
-    function deleteProject (accessProject, event, editProjectTitle) {
-        const clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
+    function deleteProject (accessProject, event, editProjectTitle, editProjectDueDate) {
 
-        console.log(clickedProject)
+        let clickedProject = findProjectInArray(projectDivArray) || findProjectInArray(archivedProject);
+    
         function findProjectInArray(array) {
-          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title || project.querySelector('.projectTitle').textContent === editProjectTitle.value );
+          return array.find(project => project.querySelector('.projectTitle').textContent === accessProject.newProjectObj.title && project.querySelector('.projectDueDate').textContent === accessProject.newProjectObj.dueDate );
         }
 
-        const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent
+        if (!clickedProject) {
+            clickedProject = findProjectInArrayEdit(projectDivArray) || findProjectInArrayEdit (archivedProject)
+        }
+
+        function findProjectInArrayEdit (array) {
+            return array.find(project => project.querySelector('.projectTitle').textContent === editProjectTitle.value  && project.querySelector('.projectDueDate').textContent === editProjectDueDate.value  )
+        }
+
+        const projectTitle = clickedProject.getElementsByClassName("projectTitle")[0].textContent;
+        const projectDueDate1 = clickedProject.getElementsByClassName("projectDueDate")[0].textContent;
         const options = Array.from(listProjectColor.getElementsByTagName('option'));
 
 
         const clickedObjProject = findProjectObjInArray(projectArray) || findProjectObjInArray(archivedProjectObjs)
         
         function findProjectObjInArray(array) {
-            return array.find((obj) => obj.title === projectTitle);
+            return array.find((obj) => obj.title === projectTitle && obj.dueDate === projectDueDate1 );
         }
+
+        console.log(archivedProjectObjs)
+        console.log(clickedObjProject)
         
         const archivedProjectIndex = archivedProject.indexOf(clickedProject);
         const archivedObjProjectIndex = archivedProjectObjs.indexOf(clickedObjProject);
         const clickedProjectIndex = projectDivArray.indexOf(clickedProject);
         const clickedObjProjectIndex = projectArray.indexOf(clickedObjProject);
 
+        console.log(archivedObjProjectIndex)
 
         if (archivedProjectIndex !== -1 ) {
-            archivedProject.slice(archivedProjectIndex);
+            archivedProject.splice(archivedProjectIndex, 1);
         }
  
         
         if (archivedObjProjectIndex !== -1 ) {
-            archivedProjectObjs.slice(archivedObjProjectIndex);
+            archivedProjectObjs.splice(archivedObjProjectIndex, 1);
+            console.log("hey")
         }
 
+        console.log(archivedProjectObjs)
 
         if (clickedProjectIndex !== -1) {
             projectDivArray.splice(clickedProjectIndex, 1);
@@ -291,23 +313,30 @@ function projectDone (event, accessProject) {
             listProjectColor.appendChild(colorReturns);
         }
 
-        rmvTasksArchProj (projectTitle, clickedProject);
+        rmvTasksArchProj (projectTitle, clickedProject, event);
 
         const clickedModifyProjectColor = document.createElement('option');
         clickedModifyProjectColor.value = accessProject.newProjectObj.color;
         clickedModifyProjectColor.style.backgroundColor = accessProject.newProjectObj.color;
             
         changeColorOptions(clickedModifyProjectColor, event);
+
     }
 
-    function trackNames (clickedObjProject) {
-        console.log(projectArray);
-        console.log(archivedProjectObjs);
+    function checkCurrentNames (clickedObjProject) {
         nameTrackerNonArchived = projectArray.map(obj => obj.title)
-        nameTrackerArchived = (archivedProjectObjs.map(obj => obj.title))
-
+        console.log(nameTrackerNonArchived);
+        console.log(projectArray);
+        console.log(clickedObjProject)
         return nameTrackerNonArchived.includes(clickedObjProject.title)
-        
+    }
+
+    function checkArchivedNames (clickedObjProject) {
+        nameTrackerArchived = (archivedProjectObjs.map(obj => obj.title))
+        console.log(nameTrackerArchived);
+        console.log(archivedProjectObjs);
+        console.log(clickedObjProject)
+        return nameTrackerArchived.includes(clickedObjProject.title)
     }
 
 
